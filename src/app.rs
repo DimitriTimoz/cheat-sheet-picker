@@ -19,9 +19,9 @@ struct GreetArgs<'a> {
 pub fn app() -> Html {
     let greet_input_ref = use_node_ref();
 
-    let name = use_state(|| String::new());
+    let name = use_state(String::new);
 
-    let greet_msg = use_state(|| String::new());
+    let greet_msg = use_state(String::new);
     {
         let greet_msg = greet_msg.clone();
         let name = name.clone();
@@ -34,7 +34,7 @@ pub fn app() -> Html {
                         return;
                     }
 
-                    let args = to_value(&GreetArgs { name: &*name }).unwrap();
+                    let args = to_value(&GreetArgs { name: &name }).unwrap();
                     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
                     let new_msg = invoke("greet", args).await.as_string().unwrap();
                     greet_msg.set(new_msg);
