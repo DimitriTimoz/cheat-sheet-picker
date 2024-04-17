@@ -1,0 +1,3 @@
+[submodule "ds-cheatsheets"]
+	path = ds-cheatsheets
+	url = https://github.com/FavioVazquez/ds-cheatsheets.git
