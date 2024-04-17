@@ -88,28 +88,24 @@ async fn download_pdf(url: String, path: String) -> Result<(), anyhow::Error> {
     Ok(())
 }
 
-use std::{fs, io::Write};
+use std::fs ;
 
 #[tokio::main]
 async fn main() {
     println!("cargo:info=Starting build process...");
-    let mut log_file = std::fs::File::create("../dist/public/build.log").unwrap();
     let sheets = extract_readme_content();
     // Write the content to a file
     let mut content = serde_json::to_string(&sheets).unwrap();
     content.push('\n');
     std::fs::write("../dist/public/sheets.json", content).unwrap();
-    println!("cargo:info=Saved sheets.json");
-    fs::create_dir_all("dist/public/sheets").unwrap();
+    fs::create_dir_all("../dist/public/sheets/a").unwrap();
     let fetches: Vec<_> = sheets.iter()
         .flat_map(|cat| cat.sheets.iter())
         .map(|sheet| {
-            writeln!(log_file, "cargo:info=Downloading {}", sheet.path);
-            let mut log_file = log_file.try_clone().unwrap();
             async move {
-                match download_pdf(sheet.url.clone(), format!("dist/public/sheets/{}", sheet.path)).await {
-                    Ok(_) => writeln!(log_file ,"nfo=Downloaded {}", sheet.title),
-                    Err(e) => writeln!(log_file, "error={}", e),
+                match download_pdf(sheet.url.clone(), format!("../dist/public/sheets/{}", sheet.path)).await {
+                    Err(e) => panic!( "{}", e),
+                    _ => println!("cargo:info=Downloaded {}", sheet.title),
                 }
             }
         })
