@@ -1,7 +1,7 @@
 {
   "productName": "cheat-sheets-picker",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "fr.aelorius.cheat-sheets-picker",
   "build": {
     "frontendDist": "../ui/"
   },
