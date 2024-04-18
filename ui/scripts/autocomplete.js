@@ -21,12 +21,37 @@ function autocomplete(inp, arr) {
 
         for (let i = 0; i < arr.length; i++) {
             if (arr[i][0].toUpperCase().includes(val.toUpperCase())) {
-                let item = document.createElement("div");
-                let isFavorite = favorites.includes(arr[i][1]);
+                let upperItem = arr[i][0].toUpperCase();
+                let upperVal = val.toUpperCase();
+                let start = upperItem.indexOf(upperVal);
+                let end = start + val.length;
 
-                item.innerHTML = `<div><strong>${arr[i][0].substr(0, val.length)}</strong>${arr[i][0].substr(val.length)}`;
-                item.innerHTML += `<input type='hidden' pdf='${arr[i][1]}' value='${arr[i][0]}'></div>`;
-                item.innerHTML += `<span class='star'>${isFavorite ? '★' : '☆'}</span>`;
+                let item = document.createElement("div");
+
+                // Create the content with highlighting
+                let content = document.createElement('div');
+                content.appendChild(document.createTextNode(arr[i][0].substring(0, start)));
+
+                let strong = document.createElement('strong');
+                strong.textContent = arr[i][0].substring(start, end);
+                content.appendChild(strong);
+
+                content.appendChild(document.createTextNode(arr[i][0].substring(end)));
+
+                let hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.setAttribute('pdf', arr[i][1]);
+                hiddenInput.value = arr[i][0];
+                content.appendChild(hiddenInput);
+
+                item.appendChild(content);
+
+                // Check if the item is a favorite and create a star symbol
+                let star = document.createElement('span');
+                star.className = 'star';
+                star.textContent = favorites.includes(arr[i][1]) ? '★' : '☆';
+                item.appendChild(star);
+
 
                 item.addEventListener("click", function(e) {
                     let this_inp = this.getElementsByTagName("input")[0];
