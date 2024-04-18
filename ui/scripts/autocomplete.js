@@ -137,9 +137,9 @@ let viewer = null;
 function updatePath(query) {
     console.log("query", query);
     let newSrc = "/sheets/" + query;
-    let oldpath = document.getElementById("viewer");
-    // Check has changed
-    
+    let oldPath = document.getElementById("viewer");
+    if (oldPath.src == newSrc) return;
+
     if (query.endsWith(".pdf")) {
         document.getElementById("imageContainer").style.display = "none";
         let newPath = document.createElement("embed");
