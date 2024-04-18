@@ -1,6 +1,3 @@
-
-use std::fmt::format;
-
 use tokio::io::AsyncWriteExt;
 use models::*;
 
@@ -60,15 +57,14 @@ fn extract_readme_content() -> Vec<Category> {
 }
 
 async fn download_pdf(url: String, path: String) -> Result<(), anyhow::Error> {
-    // Transformer l'URL de GitHub pour pointer vers le fichier brut
+    // Convert the URL to a raw URL
     let raw_url = url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/");
-    // Vérifier si le fichier existe déjà
+    // Check if the file already exists
     if std::path::Path::new(&path).exists() {
-        println!("cargo:error=File already exists");
         return Ok(());
     }
 
-    // Effectuer la requête HTTP
+    // Download the file
     let response = reqwest::get(raw_url).await?;
     let mut file = tokio::fs::File::create(path).await?;
     let content = response.bytes().await?;
@@ -78,7 +74,6 @@ async fn download_pdf(url: String, path: String) -> Result<(), anyhow::Error> {
 
 #[tokio::main]
 async fn main() {
-    println!("cargo:info=Starting build process...");
     let sheets = extract_readme_content();
     // Write the content to a file
     let mut content = serde_json::to_string(&sheets).unwrap();
