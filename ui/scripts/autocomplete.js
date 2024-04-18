@@ -135,10 +135,13 @@ function autocomplete(inp, arr) {
 
 let viewer = null;
 function updatePath(query) {
-    console.log("query", query);
+    // Get current path
+    let currentPath = localStorage.getItem('lastPath');
+    if (currentPath == query) return;
+    
     let newSrc = "/sheets/" + query;
     let oldPath = document.getElementById("viewer");
-    if (oldPath.src == newSrc) return;
+
 
     if (query.endsWith(".pdf")) {
         document.getElementById("imageContainer").style.display = "none";
