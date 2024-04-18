@@ -8,7 +8,6 @@ function autocomplete(inp, arr) {
     inp.addEventListener("input", function(e) {
         let val = this.value;
         closeAllLists();
-        if (!val) return false;
         currentFocus = -1;
 
         let listContainer = document.createElement("div");
@@ -40,7 +39,7 @@ function autocomplete(inp, arr) {
 
                 let hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
-                hiddenInput.setAttribute('pdf', arr[i][1]);
+                hiddenInput.setAttribute('path', arr[i][1]);
                 hiddenInput.value = arr[i][0];
                 content.appendChild(hiddenInput);
 
@@ -57,16 +56,18 @@ function autocomplete(inp, arr) {
                     let this_inp = this.getElementsByTagName("input")[0];
                     // Check if the user clicked on the star
                     if (e.target.className === "star") {
-                        toggleFavorite(e.target.pdf);
-                        let isFavorite = favorites.includes(e.target.pdf);
+                        let parent = e.target.parentNode;
+                        const path = parent.getElementsByTagName("input")[0].getAttribute("path");
+                        toggleFavorite(path);
+                        let isFavorite = favorites.includes(path);
                         e.target.innerHTML = isFavorite ? '★' : '☆';
                         return;
                     }
                     inp.value = this_inp.value;
-                    inp.pdf = this_inp.getAttribute("pdf");
+                    inp.path = this_inp.getAttribute("path");
 
                     closeAllLists();
-                    updatePDF(inp.pdf);
+                    updatePath(inp.path);
                     
                 });
                 listContainer.appendChild(item);
@@ -74,14 +75,14 @@ function autocomplete(inp, arr) {
         }
     });
 
-    function toggleFavorite(pdf) {
-        let index = favorites.indexOf(pdf);
+    function toggleFavorite(path) {
+        let index = favorites.indexOf(path);
         if (index > -1) {
-            favorites.splice(index, 1); // Remove from favorites
+            favorites.splice(index, 1);
         } else {
-            favorites.push(pdf); // Add to favorites
+            favorites.push(path); 
         }
-        localStorage.setItem('favorites', JSON.stringify(favorites)); // Update local storage
+        localStorage.setItem('favorites', JSON.stringify(favorites)); 
     }
 
     inp.addEventListener("keydown", function(e) {
@@ -133,18 +134,18 @@ function autocomplete(inp, arr) {
 }
 
 let viewer = null;
-function updatePDF(query) {
+function updatePath(query) {
     console.log("query", query);
     let newSrc = "/sheets/" + query;
-    let oldPdf = document.getElementById("viewer");
+    let oldpath = document.getElementById("viewer");
     // Check has changed
     
     if (query.endsWith(".pdf")) {
         document.getElementById("imageContainer").style.display = "none";
-        let newPdf = document.createElement("embed");
-        newPdf.setAttribute("id", "viewer");
-        newPdf.setAttribute("src", newSrc);
-        oldPdf.parentNode.replaceChild(newPdf, oldPdf);
+        let newPath = document.createElement("embed");
+        newPath.setAttribute("id", "viewer");
+        newPath.setAttribute("src", newSrc);
+        oldPath.parentNode.replaceChild(newPath, oldPath);
     } else {
         viewer = new Viewer(document.getElementById('imageViewer'), {
             inline: true,
@@ -153,7 +154,7 @@ function updatePDF(query) {
             },
         });
         viewer.show();
-        oldPdf.style.display = "none";
+        oldPath.style.display = "none";
         document.getElementById("imageContainer").style.display = "flex";
         document.getElementById("imageViewer").src = newSrc;
     }
