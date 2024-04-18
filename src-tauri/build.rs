@@ -1,4 +1,6 @@
 
+use std::fmt::format;
+
 use tokio::io::AsyncWriteExt;
 use models::*;
 
@@ -35,7 +37,7 @@ fn extract_readme_content() -> Vec<Category> {
                         let url = args[1].split_at(args[1].len() - 1).0;
                         let path = url.split('/').last().unwrap();
                         let sheet = Sheet {
-                            title: title.to_string(),
+                            title: format!("{} | {}", cat.title, title),
                             description: None,
                             path: path.to_string(),
                             url: url.to_string(),
