@@ -158,9 +158,15 @@ function updatePath(query) {
         document.getElementById("imageContainer").style.display = "flex";
         document.getElementById("imageViewer").src = newSrc;
     }
+    // Save the current path
+    localStorage.setItem('lastPath', query);
 }
-
+    
 window.addEventListener('load_sheets', function(sheets) {
     SHEETS = sheets.detail.sheets.map(category => category.sheets.map(sheet => [sheet.title, sheet.path])).flat();
     autocomplete(document.getElementById("query-input"), SHEETS);
+    let lastPath = localStorage.getItem('lastPath');
+    if (lastPath) {
+        updatePath(lastPath);
+    }
 });
