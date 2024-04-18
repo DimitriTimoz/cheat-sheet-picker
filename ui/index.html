@@ -9,10 +9,11 @@
   <body>
 
     <h1 id="header">Welcome from Tauri!</h1></body>
-    <div class="autocomplete" style="width:300px;">
-        <input id="myInput" type="text" name="myCountry" placeholder="Country">
+    <div class="autocomplete">
+        <input id="query-input" type="text" name="query" placeholder="Cheat sheet">
     </div>
-    <div id="toc"></div>
+    <div id="toc" style="display: none;"></div>
     <script src="/scripts/load_toc.js"></script>
+    <script src="/scripts/autocomplete.js"></script>
   </body>
 </html>

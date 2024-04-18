@@ -74,8 +74,6 @@ async fn download_pdf(url: String, path: String) -> Result<(), anyhow::Error> {
     Ok(())
 }
 
-use std::fs ;
-
 #[tokio::main]
 async fn main() {
     println!("cargo:info=Starting build process...");

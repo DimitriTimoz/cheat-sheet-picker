@@ -1,6 +1,10 @@
 // access the pre-bundled global API functions
 const { invoke } = window.__TAURI__.core
 
+const SHEET = {
+    event: new CustomEvent('load_sheets', { detail: 'sheets' })
+}
+
 function load_toc(categories) {
     const toc = document.createElement('div')
     for (const category of categories) {
@@ -30,11 +34,18 @@ function load_toc(categories) {
     tocContainer.appendChild(toc)
 }  
 
+window.addEventListener('load_sheets', function(sheets) {
+    console.log("sheets", sheets)
+    load_toc(sheets.detail.sheets)
+})
+
 invoke('load_categories', { })
 // `invoke` returns a Promise
 .then((response) => {
     console.log("here", response)
-    load_toc(response)
+    window.dispatchEvent(new CustomEvent('load_sheets', { detail: {
+        sheets: response
+    }}));    
 }).catch((error) => {
     console.error(error)
 })
