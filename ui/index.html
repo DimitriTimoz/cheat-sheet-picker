@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="/styles/search.css" />
   </head>
   <body>
-
-    <h1 id="header">Welcome from Tauri!</h1></body>
     <div class="autocomplete">
         <input id="query-input" type="text" name="query" placeholder="Cheat sheet">
     </div>
+    <embed id="pdf" src="/sheets/base-r.pdf" type="application/pdf" width="100%" height="1000rem">
+    <div id="results"></div>
     <div id="toc" style="display: none;"></div>
     <script src="/scripts/load_toc.js"></script>
     <script src="/scripts/autocomplete.js"></script>
