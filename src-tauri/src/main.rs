@@ -8,7 +8,7 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn load_categories() -> Vec<Category> {
-    let content = std::fs::read_to_string("../dist/public/sheets.json").unwrap();
+    let content = std::fs::read_to_string("../ui/sheets.json").unwrap();
     serde_json::from_str(&content).unwrap()
 }
 
