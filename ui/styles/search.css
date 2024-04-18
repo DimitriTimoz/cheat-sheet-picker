@@ -16,6 +16,10 @@
     height: 3rem;
     border-radius: 100%;
     background-color: var(--second-background);
+    background-image: url("/images/search.svg");
+    background-position: center;
+    background-size: 2rem;
+    background-repeat: no-repeat;
     cursor: pointer;
 }
 
