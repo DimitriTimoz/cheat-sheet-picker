@@ -4,46 +4,76 @@
     padding: 0px;
 }
 
-body {
+.autocomplete {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+}
+
+.folded-autocomplete {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    background-color: var(--second-background);
+    cursor: pointer;
+}
+
+.folded-autocomplete input {
+    display: none;
+}
+
+.unfolded-autocomplete {
+    width: 80%;
+    height: 3rem;
+    border-radius: 1rem;
+    background-color: var(--second-background);
+    cursor: pointer;
+    padding: 0 1rem;
+    font-size: 2rem;
+}
+
+.unfolded-autocomplete input[type="text"] {
+    font-size: 2rem;
+}
+
+body, html {
     width: 100%;
+    height: 100%;
 }
 
 /*the container must be positioned relative:*/
-.autocomplete {
+.autocomplete-items, input {
     width: 80%;
     margin: auto;
 }
 
-input {
-    border: 1px solid transparent;
-    background-color: #f1f1f1;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 2rem;
-}
-
-input[type=text] {
-    background-color: #f1f1f1;
+#query-input {
+    height: 100%;
     width: 100%;
 }
 
-lete-items {
-    position: absolute;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
-    left: 0;
-    right: 0;
+input {
+    border: 1px solid transparent;
+}
+
+input {
+    background-color: var(--second-background);
+}
+
+
+.autocomplete-items {
+    position: fixed;
+    color: var(--font-color);
+    font-family: Arial, Helvetica, sans-serif;
+    backdrop-filter: blur(100px);
 }
 
 .autocomplete-items div {
-    padding: 10px;
     cursor: pointer;
-    background-color: #fff; 
+    background-color: var(--second-background);
     border-bottom: 1px solid #d4d4d4; 
+    opacity: 0.9;
 }
 
 /*when hovering an item:*/
@@ -53,6 +83,25 @@ lete-items {
 
 /*when navigating through the items using the arrow keys:*/
 .autocomplete-active {
-    background-color: DodgerBlue !important; 
-    color: #ffffff; 
+    color: var(--background-color);
+}
+
+.autocomplete-items > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.star {
+    margin-right: 1rem;
+}
+
+embed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#imageContainer {
+    display: flex;
+    justify-content: center;
 }
