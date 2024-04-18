@@ -30,12 +30,19 @@ function autocomplete(inp, arr) {
 
                 item.addEventListener("click", function(e) {
                     let this_inp = this.getElementsByTagName("input")[0];
+                    // Check if the user clicked on the star
+                    if (e.target.className === "star") {
+                        toggleFavorite(e.target.pdf);
+                        let isFavorite = favorites.includes(e.target.pdf);
+                        e.target.innerHTML = isFavorite ? '★' : '☆';
+                        return;
+                    }
                     inp.value = this_inp.value;
                     inp.pdf = this_inp.getAttribute("pdf");
 
                     closeAllLists();
                     updatePDF(inp.pdf);
-                    toggleFavorite(inp.pdf); // Toggle favorite status on click
+                    
                 });
                 listContainer.appendChild(item);
             }
@@ -93,6 +100,9 @@ function autocomplete(inp, arr) {
     }
 
     document.addEventListener("click", function (e) {
+        // Check if the click was on a star
+        if (e.target.className === "star") return;
+
         closeAllLists(e.target);
     });
 }
@@ -102,6 +112,8 @@ function updatePDF(query) {
     console.log("query", query);
     let newSrc = "/sheets/" + query;
     let oldPdf = document.getElementById("viewer");
+    // Check has changed
+    
     if (query.endsWith(".pdf")) {
         document.getElementById("imageContainer").style.display = "none";
         let newPdf = document.createElement("embed");

@@ -27,6 +27,8 @@
         let state = false;
         autocomplete_div.addEventListener("click", (e) => {
             if (e.target === queryInput) return;
+            if (!autocomplete_div.contains(event.target)) return;
+            if (e.target.classList.contains("star")) return;
             state = !state;
             if (state) {
                 autocomplete_div.classList.remove("folded-autocomplete");

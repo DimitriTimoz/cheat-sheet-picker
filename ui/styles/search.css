@@ -29,8 +29,8 @@
     border-radius: 1rem;
     background-color: var(--second-background);
     cursor: pointer;
-    padding: 0 1rem;
     font-size: 2rem;
+    border-radius: 1rem;
 }
 
 .unfolded-autocomplete input[type="text"] {
@@ -51,6 +51,8 @@ body, html {
 #query-input {
     height: 100%;
     width: 100%;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
 }
 
 input {
@@ -61,12 +63,16 @@ input {
     background-color: var(--second-background);
 }
 
-
 .autocomplete-items {
     position: fixed;
     color: var(--font-color);
     font-family: Arial, Helvetica, sans-serif;
     backdrop-filter: blur(100px);
+    height: 80%;
+    overflow-y: scroll;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    padding-bottom: 1rem;
 }
 
 .autocomplete-items div {
@@ -92,7 +98,7 @@ input {
 }
 
 .star {
-    margin-right: 1rem;
+    padding-right: 1rem;
 }
 
 embed {
