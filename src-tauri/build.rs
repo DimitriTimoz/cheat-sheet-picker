@@ -1,20 +1,6 @@
-use serde::Serialize;
-use string_tools;
+
 use tokio::io::AsyncWriteExt;
-
-#[derive(Clone, Debug, Serialize)]
-struct Sheet {
-    title: String,
-    description: Option<String>,
-    path: String,
-    url: String,
-}
-
-#[derive(Clone, Debug, Serialize)]
-struct Category {
-    title: String,
-    sheets: Vec<Sheet>,
-}
+use models::*;
 
 fn extract_readme_content() -> Vec<Category> {
     // Read the README.md file
@@ -47,7 +33,7 @@ fn extract_readme_content() -> Vec<Category> {
                     if args.len() == 2 {
                         let title = args[0].split_at(7).1;
                         let url = args[1].split_at(args[1].len() - 1).0;
-                        let path = url.split("/").last().unwrap();
+                        let path = url.split('/').last().unwrap();
                         let sheet = Sheet {
                             title: title.to_string(),
                             description: None,
@@ -97,13 +83,13 @@ async fn main() {
     // Write the content to a file
     let mut content = serde_json::to_string(&sheets).unwrap();
     content.push('\n');
-    std::fs::write("../dist/public/sheets.json", content).unwrap();
-    fs::create_dir_all("../dist/public/sheets/a").unwrap();
+    std::fs::write("../ui/sheets.json", content).unwrap();
+    std::fs::create_dir_all("../ui/sheets").unwrap();
     let fetches: Vec<_> = sheets.iter()
         .flat_map(|cat| cat.sheets.iter())
         .map(|sheet| {
             async move {
-                match download_pdf(sheet.url.clone(), format!("../dist/public/sheets/{}", sheet.path)).await {
+                match download_pdf(sheet.url.clone(), format!("../ui/sheets/{}", sheet.path)).await {
                     Err(e) => panic!( "{}", e),
                     _ => println!("cargo:info=Downloaded {}", sheet.title),
                 }
