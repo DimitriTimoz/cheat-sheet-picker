@@ -7,6 +7,7 @@ This is a simple cheat sheet picker that allows you to select a cheat sheet from
 ## Features
 - Select a cheat sheet from a list of cheat sheets
 - Display the selected cheat sheet
+- Add a cheat sheet to your favorites
 
 ## Technologies
 - Tauri
