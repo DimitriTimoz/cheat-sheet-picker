@@ -40,9 +40,7 @@ window.addEventListener('load_sheets', function(sheets) {
 })
 
 invoke('load_categories', { })
-// `invoke` returns a Promise
-.then((response) => {
-    console.log("here", response)
+    .then((response) => {
         window.dispatchEvent(new CustomEvent('load_sheets', { detail: {
             sheets: response
         }}));    
