@@ -43,9 +43,9 @@ invoke('load_categories', { })
 // `invoke` returns a Promise
 .then((response) => {
     console.log("here", response)
-    window.dispatchEvent(new CustomEvent('load_sheets', { detail: {
-        sheets: response
-    }}));    
-}).catch((error) => {
-    console.error(error)
-})
+        window.dispatchEvent(new CustomEvent('load_sheets', { detail: {
+            sheets: response
+        }}));    
+    }).catch((error) => {
+        console.error(error)
+    })
