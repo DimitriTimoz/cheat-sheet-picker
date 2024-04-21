@@ -34,7 +34,6 @@ function autocomplete(inp, arr) {
                 let strong = document.createElement('strong');
                 strong.textContent = arr[i][0].substring(start, end);
                 content.appendChild(strong);
-
                 content.appendChild(document.createTextNode(arr[i][0].substring(end)));
 
                 let hiddenInput = document.createElement('input');

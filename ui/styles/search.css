@@ -28,17 +28,19 @@
 }
 
 .unfolded-autocomplete {
-    width: 80%;
-    height: 3rem;
+    width: 50%;
+    min-width: 40rem;
+    height: 2.5rem;
     border-radius: 1rem;
     background-color: var(--second-background);
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.3rem;
     border-radius: 1rem;
 }
 
 .unfolded-autocomplete input[type="text"] {
-    font-size: 2rem;
+    font-size: 1.3rem;
+    padding-left: 1rem;
 }
 
 body, html {
@@ -48,7 +50,8 @@ body, html {
 
 /*the container must be positioned relative:*/
 .autocomplete-items, input {
-    width: 80%;
+    width: 50%;
+    min-width: 40rem;
     margin: auto;
 }
 
@@ -79,11 +82,12 @@ input {
     padding-bottom: 1rem;
 }
 
-.autocomplete-items div {
+.autocomplete-items > div {
     cursor: pointer;
     background-color: var(--second-background);
     border-bottom: 1px solid #d4d4d4; 
     opacity: 0.9;
+    padding-left: 1rem;
 }
 
 /*when hovering an item:*/
