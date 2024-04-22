@@ -18,25 +18,30 @@ function autocomplete(inp, arr) {
 
         // Sort array to show favorites first
         arr.sort((a, b) => (favorites.includes(b[1]) - favorites.includes(a[1])));
-
+        
+        let matched_words = {};
         for (let i = 0; i < arr.length; i++) {
-            let matched_words = [];
+            let matches = [];
             for (let j = 0; j < vals.length; j++) {
                 if (vals[j] === "") continue;
                 let index = arr[i][0].toUpperCase().indexOf(vals[j].toUpperCase());
                 if (index !== -1) {
-                    matched_words.push([index, vals[j].length]);
+                    matches.push([index, vals[j].length]);
                 }
             }
-            
-            if (matched_words.length > 0) {
+            matched_words[arr[i][1]] = matches
+        }
+
+        arr.sort((a, b) => (matched_words[b[1]].length - matched_words[a[1]].length));
+        for (let i = 0; i < arr.length; i++) {
+            if (matched_words[arr[i][1]].length > 0) {
                 // Sort the matched words by index
-                matched_words.sort((a, b) => a[0] - b[0]);
+                let matches = matched_words[arr[i][1]];
             
                 // Put bold tags around the matched words
                 let new_str = arr[i][0];
-                for (let j = matched_words.length - 1; j >= 0; j--) {
-                    new_str = new_str.slice(0, matched_words[j][0]) + "<strong>" + new_str.slice(matched_words[j][0], matched_words[j][0] + matched_words[j][1]) + "</strong>" + new_str.slice(matched_words[j][0] + matched_words[j][1]);
+                for (let j = matches.length - 1; j >= 0; j--) {
+                    new_str = new_str.slice(0, matches[j][0]) + "<strong>" + new_str.slice(matches[j][0], matches[j][0] + matches[j][1]) + "</strong>" + new_str.slice(matches[j][0] + matches[j][1]);
                 }
                 let content = document.createElement("div");
                 content.innerHTML = new_str;

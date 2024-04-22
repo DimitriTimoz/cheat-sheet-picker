@@ -1,4 +1,4 @@
-* {
+    * {
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
@@ -60,6 +60,7 @@ body, html {
     width: 100%;
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
+    border: 1px solid black;
 }
 
 input {
