@@ -144,9 +144,10 @@ function updatePath(query) {
 
     if (query.endsWith(".pdf")) {
         document.getElementById("imageContainer").style.display = "none";
-        let newPath = document.createElement("embed");
+        let newPath = document.createElement("iframe");
         newPath.setAttribute("id", "viewer");
         newPath.setAttribute("src", newSrc);
+      
         oldPath.parentNode.replaceChild(newPath, oldPath);
     } else {
         viewer = new Viewer(document.getElementById('imageViewer'), {

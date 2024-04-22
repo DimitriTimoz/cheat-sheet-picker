@@ -13,7 +13,7 @@
     <div class="autocomplete folded-autocomplete">
         <input id="query-input" type="text" name="query" placeholder="Cheat sheet">
     </div>
-    <embed id="viewer" src="/sheets/base-r.pdf" type="application/pdf">
+    <iframe id="viewer" src="/sheets/base-r.pdf"></iframe>
     <div id="imageContainer">
         <img id="imageViewer" src="" alt="Image">
     </div>
@@ -40,12 +40,14 @@
             }
         });
 
-        document.addEventListener("click", (event) => {
-            if (!autocomplete_div.contains(event.target)) {
-                autocomplete_div.classList.remove("unfolded-autocomplete");
-                autocomplete_div.classList.add("folded-autocomplete");
-                state = false;
-            }
+        document.querySelector('iframe').addEventListener('load', function() {
+            const iframe = this;
+            const originalSrc = iframe.src;
+            setInterval(() => {
+                if (iframe.contentWindow.location.href !== originalSrc) {
+                    iframe.contentWindow.location.href = originalSrc;
+                }
+            }, 100);
         });
     </script>
   </body>
