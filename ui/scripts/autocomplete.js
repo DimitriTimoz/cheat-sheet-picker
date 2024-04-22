@@ -26,7 +26,16 @@ function autocomplete(inp, arr) {
                 if (vals[j] === "") continue;
                 let index = arr[i][0].toUpperCase().indexOf(vals[j].toUpperCase());
                 if (index !== -1) {
-                    matches.push([index, vals[j].length]);
+                    // Check if the word is already matched
+                    let already_matched = false;
+                    for (let k = 0; k < matches.length; k++) {
+                        if (index >= matches[k][0] && index < matches[k][0] + matches[k][1]) {
+                            already_matched = true;
+                            break;
+                        }
+                    }
+                    if (!already_matched)
+                        matches.push([index, vals[j].length]);
                 }
             }
             matched_words[arr[i][1]] = matches
@@ -37,12 +46,21 @@ function autocomplete(inp, arr) {
             if (matched_words[arr[i][1]].length > 0) {
                 // Sort the matched words by index
                 let matches = matched_words[arr[i][1]];
-            
+                matches.sort((a, b) => a[0] - b[0]);
                 // Put bold tags around the matched words
-                let new_str = arr[i][0];
-                for (let j = matches.length - 1; j >= 0; j--) {
-                    new_str = new_str.slice(0, matches[j][0]) + "<strong>" + new_str.slice(matches[j][0], matches[j][0] + matches[j][1]) + "</strong>" + new_str.slice(matches[j][0] + matches[j][1]);
+                let name = arr[i][0];
+                let new_str = "";
+                let last_index = 0; 
+                
+                for (let j = 0; j < matches.length; j++) {
+                    // Add text before the current match
+                    new_str += name.substring(last_index, matches[j][0]);
+                    // Add the bolded text
+                    new_str += "<strong>" + name.substring(matches[j][0], matches[j][0] + matches[j][1]) + "</strong>";
+                    // Update last_index to end of the current match
+                    last_index = matches[j][0] + matches[j][1];
                 }
+                new_str += name.substring(last_index);
                 let content = document.createElement("div");
                 content.innerHTML = new_str;
             
