@@ -7,6 +7,7 @@ function autocomplete(inp, arr) {
 
     inp.addEventListener("input", function(e) {
         let val = this.value;
+        let vals = val.split(' ');
         closeAllLists();
         currentFocus = -1;
 
@@ -19,35 +20,41 @@ function autocomplete(inp, arr) {
         arr.sort((a, b) => (favorites.includes(b[1]) - favorites.includes(a[1])));
 
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i][0].toUpperCase().includes(val.toUpperCase())) {
-                let upperItem = arr[i][0].toUpperCase();
-                let upperVal = val.toUpperCase();
-                let start = upperItem.indexOf(upperVal);
-                let end = start + val.length;
-
+            let matched_words = [];
+            for (let j = 0; j < vals.length; j++) {
+                if (vals[j] === "") continue;
+                let index = arr[i][0].toUpperCase().indexOf(vals[j].toUpperCase());
+                if (index !== -1) {
+                    matched_words.push([index, vals[j].length]);
+                }
+            }
+            
+            if (matched_words.length > 0) {
+                // Sort the matched words by index
+                matched_words.sort((a, b) => a[0] - b[0]);
+            
+                // Put bold tags around the matched words
+                let new_str = arr[i][0];
+                for (let j = matched_words.length - 1; j >= 0; j--) {
+                    new_str = new_str.slice(0, matched_words[j][0]) + "<strong>" + new_str.slice(matched_words[j][0], matched_words[j][0] + matched_words[j][1]) + "</strong>" + new_str.slice(matched_words[j][0] + matched_words[j][1]);
+                }
+                let content = document.createElement("div");
+                content.innerHTML = new_str;
+            
                 let item = document.createElement("div");
-
-                // Create the content with highlighting
-                let content = document.createElement('div');
-                content.appendChild(document.createTextNode(arr[i][0].substring(0, start)));
-
-                let strong = document.createElement('strong');
-                strong.textContent = arr[i][0].substring(start, end);
-                content.appendChild(strong);
-                content.appendChild(document.createTextNode(arr[i][0].substring(end)));
-
                 let hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
                 hiddenInput.setAttribute('path', arr[i][1]);
                 hiddenInput.value = arr[i][0];
-                content.appendChild(hiddenInput);
-
                 item.appendChild(content);
-
+                item.appendChild(hiddenInput);
+                item.appendChild(content);
+                item.appendChild(hiddenInput);
+                
                 // Check if the item is a favorite and create a star symbol
                 let star = document.createElement('span');
                 star.className = 'star';
-                star.textContent = favorites.includes(arr[i][1]) ? '★' : '☆';
+                star.innerHTML = favorites.includes(arr[i][1]) ? '★' : '☆';
                 item.appendChild(star);
 
 
