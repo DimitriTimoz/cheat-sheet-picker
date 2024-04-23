@@ -6,18 +6,15 @@
     <title>Document</title>
     <link rel="stylesheet" href="/styles/colors.css" />
     <link rel="stylesheet" href="/styles/search.css" />
-    <link rel="stylesheet" href="https://unpkg.com/iv-viewer/dist/iv-viewer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css" integrity="sha512-za6IYQz7tR0pzniM/EAkgjV1gf1kWMlVJHBHavKIvsNoUMKWU99ZHzvL6lIobjiE2yKDAKMDSSmcMAxoiWgoWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
     <div class="autocomplete folded-autocomplete">
         <input id="query-input" type="text" name="query" placeholder="Cheat sheet">
     </div>
-    <iframe id="viewer" src="/sheets/base-r.pdf"></iframe>
+    <iframe id="viewer" src="/sheets/base-r.pdf" allowfullscreen></iframe>
     <div id="imageContainer" style="display: none;">
         <img id="imageViewer" src="" alt="Image">
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js" integrity="sha512-EC3CQ+2OkM+ZKsM1dbFAB6OGEPKRxi6EDRnZW9ys8LghQRAq6cXPUgXCCujmDrXdodGXX9bqaaCRtwj4h4wgSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="/scripts/load_toc.js"></script>
     <script src="/scripts/autocomplete.js"></script>
     <script>
@@ -39,15 +36,6 @@
             }
         });
 
-        document.querySelector('iframe').addEventListener('load', function() {
-            const iframe = this;
-            const originalSrc = iframe.src;
-            setInterval(() => {
-                if (iframe.contentWindow.location.href !== originalSrc) {
-                    iframe.contentWindow.location.href = originalSrc;
-                }
-            }, 100);
-        });
     </script>
   </body>
 </html>

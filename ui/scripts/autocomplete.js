@@ -167,11 +167,10 @@ function autocomplete(inp, arr) {
     });
 }
 
-let viewer = null;
-function updatePath(query) {
+function updatePath(query, first=false) {
     // Get current path
     let currentPath = localStorage.getItem('lastPath');
-    if (currentPath == query) return;
+    if (currentPath == query && !first) return;
     
     let newSrc = "/sheets/" + query;
     let oldPath = document.getElementById("viewer");
@@ -182,16 +181,10 @@ function updatePath(query) {
         let newPath = document.createElement("iframe");
         newPath.setAttribute("id", "viewer");
         newPath.setAttribute("src", newSrc);
+        newPath.setAttribute("allow", "fullscreen");    
       
         oldPath.parentNode.replaceChild(newPath, oldPath);
     } else {
-        viewer = new Viewer(document.getElementById('imageViewer'), {
-            inline: true,
-            viewed() {
-                viewer.zoomTo(2);
-            },
-        });
-        viewer.show();
         oldPath.style.display = "none";
         document.getElementById("imageContainer").style.display = "flex";
         document.getElementById("imageViewer").src = newSrc;
@@ -205,6 +198,6 @@ window.addEventListener('load_sheets', function(sheets) {
     autocomplete(document.getElementById("query-input"), SHEETS);
     let lastPath = localStorage.getItem('lastPath');
     if (lastPath) {
-        updatePath(lastPath);
+        updatePath(lastPath, true);
     }
 });
