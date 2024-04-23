@@ -97,6 +97,10 @@ function autocomplete(inp, arr) {
 
                     closeAllLists();
                     updatePath(inp.path);
+                    const autocomplete_div = document.getElementsByClassName("autocomplete")[0];
+                    autocomplete_div.classList.remove("unfolded-autocomplete");
+                    autocomplete_div.classList.add("folded-autocomplete");
+            
                     
                 });
                 listContainer.appendChild(item);
@@ -152,6 +156,7 @@ function autocomplete(inp, arr) {
                 x[i].parentNode.removeChild(x[i]);
             }
         }
+
     }
 
     document.addEventListener("click", function (e) {
