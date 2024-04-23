@@ -78,7 +78,7 @@ async fn main() {
     // Write the content to a file
     let mut content = serde_json::to_string(&sheets).unwrap();
     content.push('\n');
-    std::fs::write("../ui/sheets.json", content).unwrap();
+    std::fs::write("sheets.json", content).unwrap();
     std::fs::create_dir_all("../ui/sheets").unwrap();
     let fetches: Vec<_> = sheets.iter()
         .flat_map(|cat| cat.sheets.iter())

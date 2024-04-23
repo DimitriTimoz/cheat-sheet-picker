@@ -1,8 +1,16 @@
 use models::*;
+use tauri::Manager; // Ensure this is added if not already present
 
 #[tauri::command]
-fn load_categories() -> Vec<Category> {
-    let content = std::fs::read_to_string("../ui/sheets.json").unwrap();
+fn load_categories(app: tauri::AppHandle) -> Vec<Category> {
+    let script_path = app
+        .path()
+        .resolve("sheets.json", tauri::path::BaseDirectory::Resource)
+        .unwrap()
+        .to_string_lossy()
+        .to_string();
+
+    let content = std::fs::read_to_string(script_path).unwrap();
     serde_json::from_str(&content).unwrap()
 }
 
