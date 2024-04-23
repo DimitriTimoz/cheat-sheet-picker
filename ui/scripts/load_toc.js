@@ -34,11 +34,6 @@ function load_toc(categories) {
     tocContainer.appendChild(toc)
 }  
 
-window.addEventListener('load_sheets', function(sheets) {
-    console.log("sheets", sheets)
-    load_toc(sheets.detail.sheets)
-})
-
 invoke('load_categories', { })
     .then((response) => {
         window.dispatchEvent(new CustomEvent('load_sheets', { detail: {
